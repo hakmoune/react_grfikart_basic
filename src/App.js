@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Checkbox } from "./components/forms/Checkbox";
 import { InputText } from "./components/forms/InputText";
 import { ProductCategoryRow } from "./components/products/ProductCategoryRow";
 import { ProductRow } from "./components/products/ProductRow";
+import { ErrorBoundary } from "react-error-boundary";
 
 const PRODUCTS = [
   { category: "Fruits", price: "$1", stocked: true, name: "Apple" },
@@ -19,12 +20,22 @@ const App = () => {
 
   return (
     <div className="container my-3">
-      <SearchBar value={isDisplay} setValue={setIsDisplay} isSearch={isSearch} setIsSearch={setIsSearch} />
+      <ErrorBoundary fallback={<p>Something went wrong</p>}>
+        <SearchBar value={isDisplay} setValue={setIsDisplay} isSearch={isSearch} setIsSearch={setIsSearch} />
+      </ErrorBoundary>
+
       <ProductTable products={PRODUCTS} inStock={isDisplay} isSearch={isSearch} />
     </div>);
 }
 
 const SearchBar = ({ value, setValue, isSearch, setIsSearch }) => {
+
+  // Ce petit code pour declencher une erreur qui va etrer gérer pas le ErrorBoundary
+  // Enleve les commentaires pour afficher l'erreur
+  /*useEffect(() => {
+    repo.demo
+  }, [])*/
+
   return (
     <div>
       <div className="mb-3">
